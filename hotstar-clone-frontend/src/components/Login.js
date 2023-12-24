@@ -12,9 +12,10 @@ const Login = () => {
   useEffect(() => {
     const auth = localStorage.getItem("token");
     if (auth) {
-      navigate('/')
+      navigate('/');
     }
-  },);
+  }, [navigate]);
+
   async function handleLogin(e) {
     e.preventDefault();
     fetch("http://localhost:8080/login", {
@@ -33,6 +34,8 @@ const Login = () => {
           localStorage.setItem("username", user);
           setMessage(data.message);
           navigate("/");
+          // Reload the page after successful login
+          window.location.reload();
         } else {
           setMessage(data.message);
         }
@@ -44,8 +47,7 @@ const Login = () => {
   }
 
   return (
-    <div className="container" style={{ marginTop: "14%" }} >
-
+    <div className="container mt-5" style={{ color: "white" }}>
       <Form onSubmit={handleLogin}>
         <Form.Group className="mb-3" controlId="formBasicEmail">
           <Form.Label>Username:</Form.Label>
@@ -66,14 +68,14 @@ const Login = () => {
           />
         </Form.Group>
 
-        {message && <div>{message}</div>}
+        {message && <div className="alert alert-warning">{message}</div>}
 
-        <Button variant="primary" type="submit" onClick={handleLogin}>
+        <Button variant="primary" type="submit">
           Login
         </Button>
         <p>If you do not have an Account </p>
-        <Link to="/signup">
-          <p>Click here for signup</p>
+        <Link to="/signup" style={{ color: "white" }}>
+          Click here for signup
         </Link>
       </Form>
     </div>
