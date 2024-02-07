@@ -23,7 +23,7 @@ app.use(bodyParser.json());
 
 // CORS configuration
 app.use(cors({
-  origin: 'http://localhost:3000',
+  origin: process.env.CORS_ORIGIN,
 }));
 
 // Routes for getting movie data
